@@ -1,5 +1,4 @@
 const {success, deleteResponse} = require('./../utils/response')
-const AppError = require('./../utils/appError')
 const {createToken} = require('./../utils/auth.helper')
 
 module.exports.getAll = (Model) => async (req, res, next) => {
