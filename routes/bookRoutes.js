@@ -18,7 +18,7 @@ router.route('/')
 router.route('/:id')
     .all(checkExistenceMW(Book))
     .get(getBook)
-    .patch(updateBookValidation, updateBook)
+    .patch(single('cover'), updateBookValidation, updateBook)
     .delete(deleteBook);
 
 
