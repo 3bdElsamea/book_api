@@ -14,3 +14,4 @@ module.exports.verifyToken = (token) => {
         return new AppError("Invalid token", 401);
     }
 };
+

@@ -31,6 +31,15 @@ const userSchema = new mongoose.Schema({
         minlength: [8, "Password must be at least 8 characters long"],
         select: false,
     },
+    /*
+    * This Field Is only for implementing the logout functionality without Using Cookies or Sessions
+    * Because we Cookies and Sessions will break the stateless nature of RESTful APIs
+    * and its better to use Cookies or Sessions in the front-end
+    * */
+    loggedOutAt: {
+        type: Date,
+        default: null,
+    },
 });
 
 // Hash password before saving

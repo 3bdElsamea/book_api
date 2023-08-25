@@ -9,8 +9,11 @@ module.exports = async (req, res, next) => {
     }
     const token = authorization.split(" ")[1];
     const decoded = verifyToken(token);
-    console.log(decoded.id);
-    req.user = await User.checkUser(decoded.id);
-
+    const user = await User.checkUser(decoded.id);
+    // if user loggedOutAt is after the token issuedAt then the token is invalid
+    if (user.loggedOutAt && user.loggedOutAt > decoded.iat * 1000) {
+        return next(new AppError("The User Already Logged This token Out", 401));
+    }
+    req.user = user;
     next();
 };
