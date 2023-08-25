@@ -42,32 +42,24 @@ userSchema.pre("save", async function (next) {
     next();
 });
 
-// pre for find by id and update to hash password
-// userSchema.pre("findOneAndUpdate", async function (next) {
-//     if (!this._update.password) return next();
-//     this._update.password = await bcrypt.hashgit(this._update.password, 12);
-//     next();
-// });
 
 // User Static Method to authenticate user by email and password
 userSchema.statics = {
-    async authenticate() {
-        return async function (req, res, next) {
-            const {email, password} = req.body;
+    authenticate:
+        async function ({body: {email, password}}) {
             if (!email || !password) throw new AppError("Please provide email and password", 400);
             const user = await this.findOne({email}).select("+password");
             if (!user) throw new AppError("Incorrect email or password", 401);
 
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) throw new AppError("Incorrect email or password", 401);
-
             return user;
-        }
-    },
-//     Check user for authentication
-    async checkUser(id) {
+
+        },
+
+    checkUser: async function (id) {
         const user = await this.findById(id);
-        if (!user) throw new AppError("User of this Token not found", 404);
+        if (!user) throw new AppError("User of this token not found", 404);
         return user;
     }
 }

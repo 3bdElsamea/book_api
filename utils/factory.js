@@ -6,8 +6,8 @@ module.exports.getAll = (Model) => async (req, res, next) => {
 };
 
 
-module.exports.getOne = () => async (req, res, next) => {
-    const doc = await req.doc;
+module.exports.getOne = (Model) => async (req, res, next) => {
+    const doc = Model.modelName === "User" ? req.user : req.doc;
     success(res, 200, {data: doc});
 };
 
@@ -20,8 +20,8 @@ module.exports.createOne = (Model) => async ({body}, res, next) => {
     success(res, 201, {data: doc});
 };
 
-module.exports.updateOne = () => async (req, res, next) => {
-    const doc = await req.doc;
+module.exports.updateOne = (Model) => async (req, res, next) => {
+    const doc = Model.modelName === "User" ? req.user : req.doc;
     Object.keys(req.body).forEach((key) => (doc[key] = req.body[key]));
     await doc.save();
     success(res, 200, {data: doc});
