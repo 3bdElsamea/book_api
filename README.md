@@ -35,10 +35,7 @@ providing functionalities to create, retrieve, update, and delete book records.
    ```sh
    npm install
    ```
-
-4. Configure MongoDB connection in the `config.js` file.
-
-5. Start the server:
+4. Start the server:
     - For production environment use:
       ```sh
       npm start
