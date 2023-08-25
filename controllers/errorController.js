@@ -24,7 +24,7 @@ const handleJWTExpiredError = () => {
 };
 
 const devError = (err, res) => {
-    return res.status(err.statusCode).json({
+    return res.status(err.statusCode ?? 500).json({
         status: err.status,
         error: err,
         message: err.message,
@@ -59,7 +59,7 @@ module.exports = (err, req, res, next) => {
     if (process.env.NODE_ENV === "development") {
         devError(err, res);
     } else if (process.env.NODE_ENV === "production") {
-        let error = { ...err };
+        let error = {...err};
         error.message = err.message;
 
         if (error.code === 11000) error = handleDuplicateFieldsDB(error);

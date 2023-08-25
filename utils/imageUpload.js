@@ -1,7 +1,11 @@
 const cloudinary = require('cloudinary').v2;
 const {CloudinaryStorage} = require("multer-storage-cloudinary")
+const {config} = require("dotenv");
 const multer = require("multer");
 
+config({path: "./.env"});
+
+console.log(process.env.CLOUDINARY_CLOUD_NAME);
 // Configure Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -16,8 +20,10 @@ const storage = new CloudinaryStorage({
 });
 
 const assignOnBody = (field) => (req, res, next) => {
+    console.log("test");
     if (req.file)
         req.body[field] = req.file.path;
+
     next();
 }
 

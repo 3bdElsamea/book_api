@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const AppError = require("../utils/appError");
-
 const bookSchema = new mongoose.Schema({
     title: {
         type: String,
